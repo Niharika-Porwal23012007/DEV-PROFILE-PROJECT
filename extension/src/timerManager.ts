@@ -63,7 +63,7 @@ export class TimerManager {
     const difficultyFeeling = feeling ? feeling.label : 'Medium';
 
     const config = vscode.workspace.getConfiguration('devprofile');
-    const apiUrl = config.get<string>('apiUrl', 'http://localhost:5000');
+    const apiUrl = config.get<string>('apiUrl', 'http://localhost:3000');
     const apiKey = config.get<string>('apiKey', '');
 
     try {
@@ -94,7 +94,7 @@ export class TimerManager {
     if (isNaN(minutes) || minutes <= 0) return;
 
     const config = vscode.workspace.getConfiguration('devprofile');
-    const apiUrl = config.get<string>('apiUrl', 'http://localhost:5000');
+    const apiUrl = config.get<string>('apiUrl', 'http://localhost:3000');
     const apiKey = config.get<string>('apiKey', '');
 
     try {

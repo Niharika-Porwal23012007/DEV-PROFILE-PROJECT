@@ -146,7 +146,7 @@ export class SessionTracker {
     if (this.finishedBuffer.length === 0) return;
 
     const config = vscode.workspace.getConfiguration('devprofile');
-    const apiUrl = config.get<string>('apiUrl', 'http://localhost:5000');
+    const apiUrl = config.get<string>('apiUrl', 'http://localhost:3000');
     const apiKey = config.get<string>('apiKey', '');
 
     if (!apiKey) return;

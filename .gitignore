@@ -42,3 +42,4 @@ yarn-error.log*
 
 # VS Code package output
 *.vsix
+!frontend/public/*.vsix

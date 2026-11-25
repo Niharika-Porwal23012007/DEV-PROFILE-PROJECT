@@ -501,15 +501,28 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           </div>
         </div>
 
-        {/* Extension Key Management */}
-        <div className="bg-white dark:bg-[#131316] border border-neutral-200 dark:border-white/[0.08] rounded-2xl p-6">
-          <h2 className="font-display font-bold text-sm text-neutral-900 dark:text-white mb-1 flex items-center gap-2 tracking-tight">
-            <Key className="w-4 h-4 text-amber-500" />
-            <span>Extension Key Management</span>
-          </h2>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-4">
-            Regenerating your key revokes any previously configured VS Code extension key.
-          </p>
+        {/* VS Code Extension & Key Management */}
+        <div className="bg-white dark:bg-[#131316] border border-neutral-200 dark:border-white/[0.08] rounded-2xl p-6 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="font-display font-bold text-sm text-neutral-900 dark:text-white mb-1 flex items-center gap-2 tracking-tight">
+                <Key className="w-4 h-4 text-amber-500" />
+                <span>VS Code Extension &amp; Key Management</span>
+              </h2>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                Download the companion extension without cloning GitHub, or regenerate your VS Code API key.
+              </p>
+            </div>
+
+            <a
+              href="/download-extension"
+              download="devprofile-vscode-1.0.0.vsix"
+              className="px-4 py-2 rounded-xl bg-[#FF4D24] hover:bg-[#E83E16] text-white text-xs font-semibold inline-flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 self-start sm:self-auto"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download Extension (.vsix)</span>
+            </a>
+          </div>
 
           {newKey ? (
             <div className="p-3 rounded-xl bg-[#F6F7F9] dark:bg-[#0A0A0C] border border-amber-300 dark:border-amber-500/30 flex items-center justify-between gap-3 font-mono text-xs text-neutral-900 dark:text-amber-300">
@@ -547,14 +560,31 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={() => setConfirmRegenerate(true)}
-              className="px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 dark:bg-[#0A0A0C] dark:hover:bg-white/[0.08] text-neutral-800 dark:text-neutral-100 text-xs font-semibold border border-neutral-200 dark:border-white/[0.08] transition-colors"
-            >
-              Regenerate API Key
-            </button>
+            <div>
+              <button
+                type="button"
+                onClick={() => setConfirmRegenerate(true)}
+                className="px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 dark:bg-[#0A0A0C] dark:hover:bg-white/[0.08] text-neutral-800 dark:text-neutral-100 text-xs font-semibold border border-neutral-200 dark:border-white/[0.08] transition-colors"
+              >
+                Regenerate API Key
+              </button>
+            </div>
           )}
+
+          <div className="p-3.5 rounded-xl bg-[#F6F7F9] dark:bg-[#0A0A0C] border border-neutral-200 dark:border-white/[0.08] text-xs text-neutral-600 dark:text-neutral-400 space-y-1.5">
+            <div className="font-semibold text-neutral-800 dark:text-neutral-200">Quick Setup in VS Code (works on any project):</div>
+            <ol className="list-decimal list-inside space-y-1">
+              <li>Click <strong>Download Extension (.vsix)</strong> above, then in VS Code open <strong>Extensions</strong> &rarr; <strong>&hellip;</strong> &rarr; <strong>Install from VSIX&hellip;</strong></li>
+              <li>Open VS Code <strong>Settings (User tab)</strong> and search <code className="font-mono text-[#FF4D24]">devprofile</code>.</li>
+              <li>
+                Set <code className="font-mono text-neutral-800 dark:text-neutral-200">devprofile.apiUrl</code> to{' '}
+                <code className="font-mono text-[#FF4D24] break-all">
+                  {typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}
+                </code>{' '}
+                and paste your regenerated API key into <code className="font-mono text-neutral-800 dark:text-neutral-200">devprofile.apiKey</code>.
+              </li>
+            </ol>
+          </div>
         </div>
 
         {/* Data Export & Account Deletion */}

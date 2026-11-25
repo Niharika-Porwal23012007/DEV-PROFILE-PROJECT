@@ -39,6 +39,17 @@ app.use('/api', draftRouter);
 app.use('/api', portfolioRouter);
 app.use('/api', userRouter);
 
+// Download prebuilt VS Code extension (.vsix)
+app.get('/download-extension', (req, res, next) => {
+  const distVsix = path.resolve(__dirname, '../../frontend/dist/devprofile-vscode-1.0.0.vsix');
+  const publicVsix = path.resolve(__dirname, '../../frontend/public/devprofile-vscode-1.0.0.vsix');
+  const vsixPath = fs.existsSync(distVsix) ? distVsix : fs.existsSync(publicVsix) ? publicVsix : null;
+  if (vsixPath) {
+    return res.download(vsixPath, 'devprofile-vscode-1.0.0.vsix');
+  }
+  return next();
+});
+
 // Serve Frontend Static Build
 const frontendDist = path.resolve(__dirname, '../../frontend/dist');
 if (fs.existsSync(frontendDist)) {

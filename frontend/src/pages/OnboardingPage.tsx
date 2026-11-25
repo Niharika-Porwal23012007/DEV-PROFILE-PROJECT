@@ -6,7 +6,8 @@ import {
   Check,
   AlertCircle,
   Terminal,
-  ShieldCheck
+  ShieldCheck,
+  Download
 } from 'lucide-react';
 import { api } from '../api/client';
 import { LeetCodeIcon, VSCodeIcon } from '../components/BrandIcons';
@@ -167,28 +168,41 @@ export const OnboardingPage: React.FC = () => {
 
         {/* Step 3: Install Extension Instructions */}
         <div className="bg-white dark:bg-[#131316] border border-neutral-200 dark:border-white/[0.08] rounded-2xl p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-6 h-6 rounded-lg bg-[#FF4D24] text-white font-display font-bold text-xs flex items-center justify-center tabular-nums shrink-0">
-              3
-            </span>
-            <div className="flex items-center gap-2.5 min-w-0">
-              <Terminal className="w-5 h-5 text-neutral-500 dark:text-neutral-400 shrink-0" />
-              <div>
-                <h2 className="font-display font-bold text-sm text-neutral-900 dark:text-white tracking-tight">Configure the Companion Extension</h2>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Located in the repository <code className="font-mono text-[#FF4D24]">/extension</code> directory.
-                </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <span className="w-6 h-6 rounded-lg bg-[#FF4D24] text-white font-display font-bold text-xs flex items-center justify-center tabular-nums shrink-0">
+                3
+              </span>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Terminal className="w-5 h-5 text-neutral-500 dark:text-neutral-400 shrink-0" />
+                <div>
+                  <h2 className="font-display font-bold text-sm text-neutral-900 dark:text-white tracking-tight">Download &amp; Install the Companion Extension</h2>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    Works globally on any project folder—no GitHub clone needed.
+                  </p>
+                </div>
               </div>
             </div>
+
+            <a
+              href="/download-extension"
+              download="devprofile-vscode-1.0.0.vsix"
+              className="px-4 py-2 rounded-xl bg-[#FF4D24] hover:bg-[#E83E16] text-white text-xs font-semibold inline-flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 self-start sm:self-auto"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download Extension (.vsix)</span>
+            </a>
           </div>
 
           <div className="space-y-4 text-xs text-neutral-600 dark:text-neutral-300">
             <div className="p-4 rounded-xl bg-[#0A0A0C] text-neutral-200 font-mono text-xs border border-white/[0.08] space-y-2 overflow-x-auto">
-              <div className="text-neutral-500"># 1. Compile the extension package</div>
-              <div className="text-[#FF4D24]">cd extension &amp;&amp; npm run compile</div>
-              <div className="text-neutral-500 pt-1"># 2. Launch Extension Host via F5 in VS Code, or install packaged VSIX</div>
-              <div className="text-neutral-500 pt-1"># 3. Open VS Code Settings and configure your key</div>
-              <div className="text-[#C8F96D]">DevProfile: Api Key &rarr; [Paste generated key]</div>
+              <div className="text-neutral-500"># 1. Click "Download Extension (.vsix)" above</div>
+              <div className="text-neutral-500"># 2. In VS Code: Extensions (Ctrl/Cmd+Shift+X) -&gt; ... -&gt; Install from VSIX...</div>
+              <div className="text-neutral-500 pt-1"># 3. Open VS Code Settings (User tab) and search "devprofile"</div>
+              <div className="text-[#FF4D24]">
+                devprofile.apiUrl &rarr; {typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}
+              </div>
+              <div className="text-[#C8F96D]">devprofile.apiKey &rarr; [Paste key from Step 2]</div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

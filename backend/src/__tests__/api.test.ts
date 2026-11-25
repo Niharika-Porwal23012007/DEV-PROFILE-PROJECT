@@ -453,5 +453,20 @@ describe('DevProfile Backend Integration Tests (Section 4 & 11)', () => {
 
     LeetCodeSync.setAdapter(new OfficialGraphQLAdapter());
   });
+
+  it('GET /download-extension serves prebuilt VS Code VSIX attachment', async () => {
+    const res = await request(app)
+      .get('/download-extension')
+      .buffer(true)
+      .parse((res, cb) => {
+        const chunks: Buffer[] = [];
+        res.on('data', (chunk: Buffer) => chunks.push(chunk));
+        res.on('end', () => cb(null, Buffer.concat(chunks)));
+      });
+    assert.strictEqual(res.status, 200);
+    assert.ok(String(res.headers['content-disposition'] || '').includes('devprofile-vscode-1.0.0.vsix'));
+    assert.ok(Buffer.isBuffer(res.body) && res.body.length > 5000);
+    assert.strictEqual(res.body.subarray(0, 2).toString('utf8'), 'PK');
+  });
 });
 
