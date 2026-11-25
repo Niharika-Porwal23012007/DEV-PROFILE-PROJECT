@@ -127,8 +127,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <VSCodeLogo className="w-3.5 h-3.5" />
               <span>VS Code</span>
             </span>
-            <span className="text-[11px] font-medium text-[#FF4D24]">
-              Ready
+            <span
+              className={`text-[11px] font-medium ${
+                connectedSources?.vscode?.connected
+                  ? 'text-emerald-600 dark:text-[#C8F96D]'
+                  : 'text-[#FF4D24]'
+              }`}
+            >
+              {connectedSources?.vscode?.connected ? 'Synced' : 'Ready'}
             </span>
           </div>
         </div>

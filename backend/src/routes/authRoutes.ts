@@ -315,6 +315,10 @@ authRouter.get('/me', requireAuth, (req: Request, res: Response) => {
 
   const lastGithubSync = db.prepare("SELECT run_at, status FROM sync_logs WHERE user_id = ? AND source = 'github' ORDER BY run_at DESC LIMIT 1").get(user.id) as any;
   const lastLeetcodeSync = db.prepare("SELECT run_at, status FROM sync_logs WHERE user_id = ? AND source = 'leetcode' ORDER BY run_at DESC LIMIT 1").get(user.id) as any;
+  const vscodeSessions = db.prepare('SELECT COUNT(*) as count FROM coding_sessions WHERE user_id = ?').get(user.id) as any;
+  const vscodeProblems = db.prepare('SELECT COUNT(*) as count FROM problem_times WHERE user_id = ?').get(user.id) as any;
+  const lastVscodeSession = db.prepare('SELECT start_time FROM coding_sessions WHERE user_id = ? ORDER BY start_time DESC LIMIT 1').get(user.id) as any;
+  const vscodeCount = Number(vscodeSessions?.count || 0) + Number(vscodeProblems?.count || 0);
 
   res.json({
     user: {
@@ -342,7 +346,9 @@ authRouter.get('/me', requireAuth, (req: Request, res: Response) => {
         syncStatus: lastLeetcodeSync?.status || 'active'
       },
       vscode: {
-        connected: true
+        connected: vscodeCount > 0,
+        lastSynced: lastVscodeSession?.start_time || null,
+        sessionCount: vscodeCount
       },
       linkedin: {
         connected: Boolean(user.linkedin_sub),

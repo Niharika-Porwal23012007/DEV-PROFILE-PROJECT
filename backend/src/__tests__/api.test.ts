@@ -468,5 +468,32 @@ describe('DevProfile Backend Integration Tests (Section 4 & 11)', () => {
     assert.ok(Buffer.isBuffer(res.body) && res.body.length > 5000);
     assert.strictEqual(res.body.subarray(0, 2).toString('utf8'), 'PK');
   });
+
+  it('GET /api/me transitions VS Code status from false (Ready) to true (Synced) after first session upload', async () => {
+    const regRes = await request(app)
+      .post('/api/auth/register-or-login')
+      .send({ name: 'VSCode Fresh User', githubUsername: 'octocat' });
+    assert.strictEqual(regRes.status, 200);
+    const { token, apiKey } = regRes.body;
+    assert.ok(apiKey);
+
+    const meBefore = await request(app).get('/api/me').set('Authorization', `Bearer ${token}`);
+    assert.strictEqual(meBefore.status, 200);
+    assert.strictEqual(meBefore.body.connectedSources.vscode.connected, false);
+    assert.strictEqual(meBefore.body.connectedSources.vscode.sessionCount, 0);
+
+    const sessRes = await request(app)
+      .post('/api/sessions')
+      .set('Authorization', `Bearer ${apiKey}`)
+      .send({
+        sessions: [{ project: 'HotelPro_MERN_Project', language: 'javascript', durationSec: 300, start: new Date().toISOString() }]
+      });
+    assert.strictEqual(sessRes.status, 200);
+
+    const meAfter = await request(app).get('/api/me').set('Authorization', `Bearer ${token}`);
+    assert.strictEqual(meAfter.status, 200);
+    assert.strictEqual(meAfter.body.connectedSources.vscode.connected, true);
+    assert.strictEqual(meAfter.body.connectedSources.vscode.sessionCount, 1);
+  });
 });
 

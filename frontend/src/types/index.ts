@@ -25,6 +25,8 @@ export interface ConnectedSources {
   };
   vscode: {
     connected: boolean;
+    lastSynced?: string | null;
+    sessionCount?: number;
   };
   linkedin: {
     connected: boolean;

@@ -82,6 +82,19 @@ export function App() {
     loadUserProfile();
   }, []);
 
+  useEffect(() => {
+    if (!user) return;
+    let lastRefresh = Date.now();
+    const handleFocus = () => {
+      if (Date.now() - lastRefresh < 8000) return;
+      lastRefresh = Date.now();
+      loadUserProfile(true);
+      setSyncVersion(v => v + 1);
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [user?.id]);
+
   const handleLogout = () => {
     localStorage.removeItem('devprofile_token');
     setUser(null);
