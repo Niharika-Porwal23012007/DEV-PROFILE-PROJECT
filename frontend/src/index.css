@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #F6F7F9;
+    --card-bg: #FFFFFF;
+    --card-border: #E4E6EB;
+    --card-hover: #EEF0F4;
+    --text-primary: #111114;
+    --text-muted: #5C606B;
+    --accent: #FF4D24;
+  }
+
+  .dark {
+    --bg-main: #0A0A0C;
+    --card-bg: #131316;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover: #1B1B20;
+    --text-primary: #F5F5F7;
+    --text-muted: #989BA6;
+    --accent: #FF4D24;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    transition: background-color 180ms cubic-bezier(0.16, 1, 0.3, 1), color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.font-display {
+  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.app-ambient-canvas {
+  background-image:
+    radial-gradient(640px circle at 12% 4%, rgba(255, 77, 36, 0.08), transparent 60%),
+    radial-gradient(560px circle at 88% 18%, rgba(255, 77, 36, 0.045), transparent 65%);
+}
+
+.dark .app-ambient-canvas {
+  background-image:
+    radial-gradient(720px circle at 14% 4%, rgba(255, 77, 36, 0.14), transparent 60%),
+    radial-gradient(600px circle at 88% 22%, rgba(200, 249, 109, 0.06), transparent 62%),
+    radial-gradient(680px circle at 50% 92%, rgba(255, 77, 36, 0.06), transparent 65%);
+}
+
+.app-card {
+  @apply bg-white/75 dark:bg-[#131316]/75 backdrop-blur-md border border-neutral-200/80 dark:border-white/[0.1] rounded-2xl shadow-[0_8px_30px_rgba(15,17,22,0.04)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.42)] ring-1 ring-inset ring-white/60 dark:ring-white/[0.04] transition-all duration-300 ease-out hover:scale-[1.02] hover:border-neutral-300/90 dark:hover:border-white/[0.18] hover:shadow-[0_18px_44px_rgba(15,17,22,0.10)] dark:hover:shadow-[0_22px_52px_rgba(0,0,0,0.62)] motion-reduce:hover:scale-100;
+}
+
+.app-card-subtle {
+  @apply bg-[#F6F7F9]/75 dark:bg-[#1A1A1F]/70 backdrop-blur-md border border-neutral-200/80 dark:border-white/[0.07] rounded-xl;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D6DC;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2C2C34;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9FA3AE;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #40404B;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "devprofile-project",
+  "version": "1.0.0",
+  "description": "DevProfile: Unified student developer analytics, streak tracker, weakness analyzer, AI daily planner, and LinkedIn draft generator.",
+  "scripts": {
+    "postinstall": "cd backend && npm install --include=dev && cd ../frontend && npm install --include=dev",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "cd backend && node dist/server.js",
+    "render:build": "cd backend && npm install --include=dev && npm run build && cd ../frontend && npm install --include=dev && npm run build",
+    "render:start": "cd backend && node dist/server.js",
+    "dev": "npm run build:frontend && cd backend && npx tsx src/server.ts",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "test": "cd backend && npm test",
+    "seed": "cd backend && npm run seed"
+  }
+}
